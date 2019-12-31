@@ -24,9 +24,6 @@ public class WatcherApi implements Watcher {
         if (event.getState() == Event.KeeperState.Expired) {
             try {
                 zooKeeper = new ZooKeeper("115.28.211.190:2181", 3000, this);
-                logger.info("【Watcher监听事件】={}",event.getState());
-                logger.info("【监听路径为】={}",event.getPath());
-                logger.info("【监听的类型为】={}",event.getType()); //  三种监听类型： 创建，删除，更新
             } catch (IOException e) {
                 logger.warn("fail to connect to zoo keeper", e);
             }
