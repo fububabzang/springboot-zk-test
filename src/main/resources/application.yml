@@ -4,6 +4,3 @@ server:
 
 #
 
-zookeeper:
-  address: 115.28.211.190:2181
-  timeout: 4000
