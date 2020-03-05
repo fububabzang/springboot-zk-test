@@ -2,6 +2,14 @@
 1:构建公共包编写公共接口
 2:构建服务端,编写公共接口的实现
 3:构建netty 并依次编写NettyServerInitializer , NettyServer , NettyServerHandler
+3.1:编写NettyServerInitializer需要继承ChannelInitializer
+  2:获取pipeline
+  3:pipeline加入解码器
+  4:pipeline加入编码器
+  5:pipeline加入处理器Handler,此时handler还没有，就加入个空
+
+  6:编写NettyServerHandler时需要继承ChannelInboundHandlerAdapter，然后重写 read 、active等方法
+
 4:编写server端的启动ServerBootstrap
 5:一次在之前构建的netty中编写NettyClient ， NettyClientHandler
 6:编写client端的启动ClientBootstrap

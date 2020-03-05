@@ -15,13 +15,15 @@ public class HelloServiceImpl implements HelloService {
     /** logger */
     private static final Logger logger = LogManager.getLogger(HelloServiceImpl.class);
 
+    private static int count = 0;
+
     @Override
     public String hello(String msg) {
 
         logger.info("收到客户端的消息是= {}" , msg);
 
         if(msg != null) {
-            return "你好客户端, 我已经收到你的消息 [" + msg + "] ";
+            return "你好客户端, 我已经收到你的消息 [" + msg + "] 第" + (++count) + "次";
         } else {
             return "你好客户端, 我已经收到你的消息 ";
         }

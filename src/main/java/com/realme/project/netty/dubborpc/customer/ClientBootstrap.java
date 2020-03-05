@@ -20,7 +20,7 @@ public class ClientBootstrap {
     /** logger */
     private static final Logger logger = LogManager.getLogger(ClientBootstrap.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         //创建一个消费者
         NettyClient customer = new NettyClient();
@@ -29,10 +29,12 @@ public class ClientBootstrap {
         HelloService service = (HelloService) customer.getBean(HelloService.class , providerName);
 
 
-        //通过代理对象调用服务提供者的方法
-        String res = service.hello("服务端你好，我是客户端的消费者");
+        for ( ; ;) {
+            Thread.sleep(2 * 1000);
+            //通过代理对象调用服务提供者的方法
+            String res = service.hello("服务端你好，我是客户端的消费者");
 
-        logger.info("服务器会送的结果是: {}" , res);
-
+            logger.info("服务器会送的结果是: {}", res);
+        }
     }
 }

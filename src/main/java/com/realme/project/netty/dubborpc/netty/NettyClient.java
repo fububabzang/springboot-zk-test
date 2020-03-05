@@ -26,6 +26,7 @@ public class NettyClient {
 
     private static NettyClientHandler client;
 
+    private int count = 0;
 
     //编写代理模式，获取代理对象
     public Object getBean(final Class<?> serviceClass, final String providerName) {
@@ -33,6 +34,7 @@ public class NettyClient {
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                 new Class<?>[]{serviceClass}, (proxy, method, args) -> {
 
+                    System.out.println("(proxy, method, args) 进入...." + (++count) + " 次");
                     //客户端每调用一次hello方法是就会进入到该代码
                     if (client == null) {
                         initClient();

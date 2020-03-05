@@ -26,7 +26,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter implements 
     //第一次执行，在建立连接的时候执行，而且链接建立后只执行一次
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        logger.info(" channelActive 被调用");
+        logger.info(" channelActive 被调用 , 应该是第一次被调用");
         context = ctx; //需要在其他地方使用这个ctx，所以设置了全局的context，并把ctx赋予context，便于使用
     }
 
@@ -34,10 +34,12 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter implements 
     //第三次执行 , 在收到服务器的数据用就会调用此方法
     @Override
     public synchronized void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println(" channelRead 被调用 ");
+        //System.out.println(" channelRead 被调用 应该是第四次被调用");
+        logger.info("channelRead 被调用 应该是第四次被调用");
         //把msg赋给result
         result = msg.toString();
         notify(); //此处用户唤醒等待的线程
+
     }
 
     @Override
@@ -57,19 +59,18 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter implements 
     @Override
     public synchronized Object call() throws Exception {
 
-        logger.info("call方法被调用了");
+        logger.info("call   方法被调用了  应该是第三次被调用");
 
         context.writeAndFlush(para);
         //接下来进行wait阶段
         wait();
-
+        logger.info("call2    方法被调用了 应该是第五次被调用");
         return result;
     }
 
     //2
     void setPara(String para){
-        logger.info("setPara方法被调用");
-        logger.info("para的值是: {}" , para);
+        logger.info("setPara方法被调用 ， 应该是第二次调用");
         this.para = para;
     }
 }
